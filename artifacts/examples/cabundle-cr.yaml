@@ -1,0 +1,6 @@
+apiVersion: certs.xmudrii.com/v1alpha1
+kind: CABundle
+metadata:
+  name: example-cabundle
+spec:
+  csr: '{"CN":"example.net","hosts":["example.net","www.example.net"],"key":{"algo":"ecdsa","size":256},"names":[{"C":"US","ST":"CA","L":"San Francisco"}]}'
