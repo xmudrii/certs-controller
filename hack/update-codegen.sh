@@ -26,8 +26,8 @@ CODEGEN_PKG=${CODEGEN_PKG:-$(cd ${SCRIPT_ROOT}; ls -d -1 ./vendor/k8s.io/code-ge
 #                  k8s.io/kubernetes. The output-base is needed for the generators to output into the vendor dir
 #                  instead of the $GOPATH directly. For normal projects this can be dropped.
 ${CODEGEN_PKG}/generate-groups.sh "deepcopy,client,informer,lister" \
-  github.com/xmudrii/cert-controller/pkg/client github.com/xmudrii/cert-controller/pkg/apis \
-  certcontroller:v1alpha1 \
+  github.com/xmudrii/certs-controller/pkg/client github.com/xmudrii/certs-controller/pkg/apis \
+  certs:v1alpha1 \
   --output-base "$(dirname ${BASH_SOURCE})/../../../.." \
   --go-header-file ${SCRIPT_ROOT}/hack/boilerplate.go.txt
 

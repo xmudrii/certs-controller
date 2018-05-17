@@ -19,7 +19,7 @@ limitations under the License.
 package scheme
 
 import (
-	certcontrollerv1alpha1 "github.com/xmudrii/certs-controller/pkg/apis/certcontroller/v1alpha1"
+	certcontrollerv1alpha1 "github.com/xmudrii/certs-controller/pkg/apis/certs/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"

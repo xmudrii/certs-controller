@@ -20,8 +20,8 @@ package fake
 
 import (
 	clientset "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned"
-	certcontrollerv1alpha1 "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned/typed/certcontroller/v1alpha1"
-	fakecertcontrollerv1alpha1 "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned/typed/certcontroller/v1alpha1/fake"
+	certcontrollerv1alpha1 "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned/typed/certs/v1alpha1"
+	fakecertcontrollerv1alpha1 "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned/typed/certs/v1alpha1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"

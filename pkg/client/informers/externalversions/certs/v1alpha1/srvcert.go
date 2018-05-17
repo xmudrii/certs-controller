@@ -21,10 +21,10 @@ package v1alpha1
 import (
 	time "time"
 
-	certcontroller_v1alpha1 "github.com/xmudrii/certs-controller/pkg/apis/certcontroller/v1alpha1"
+	certs_v1alpha1 "github.com/xmudrii/certs-controller/pkg/apis/certs/v1alpha1"
 	versioned "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned"
 	internalinterfaces "github.com/xmudrii/certs-controller/pkg/client/informers/externalversions/internalinterfaces"
-	v1alpha1 "github.com/xmudrii/certs-controller/pkg/client/listers/certcontroller/v1alpha1"
+	v1alpha1 "github.com/xmudrii/certs-controller/pkg/client/listers/certs/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	watch "k8s.io/apimachinery/pkg/watch"
@@ -70,7 +70,7 @@ func NewFilteredSrvCertInformer(client versioned.Interface, namespace string, re
 				return client.CertcontrollerV1alpha1().SrvCerts(namespace).Watch(options)
 			},
 		},
-		&certcontroller_v1alpha1.SrvCert{},
+		&certs_v1alpha1.SrvCert{},
 		resyncPeriod,
 		indexers,
 	)
@@ -81,7 +81,7 @@ func (f *srvCertInformer) defaultInformer(client versioned.Interface, resyncPeri
 }
 
 func (f *srvCertInformer) Informer() cache.SharedIndexInformer {
-	return f.factory.InformerFor(&certcontroller_v1alpha1.SrvCert{}, f.defaultInformer)
+	return f.factory.InformerFor(&certs_v1alpha1.SrvCert{}, f.defaultInformer)
 }
 
 func (f *srvCertInformer) Lister() v1alpha1.SrvCertLister {

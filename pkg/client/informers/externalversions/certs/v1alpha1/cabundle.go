@@ -21,10 +21,10 @@ package v1alpha1
 import (
 	time "time"
 
-	certcontroller_v1alpha1 "github.com/xmudrii/certs-controller/pkg/apis/certcontroller/v1alpha1"
+	certs_v1alpha1 "github.com/xmudrii/certs-controller/pkg/apis/certs/v1alpha1"
 	versioned "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned"
 	internalinterfaces "github.com/xmudrii/certs-controller/pkg/client/informers/externalversions/internalinterfaces"
-	v1alpha1 "github.com/xmudrii/certs-controller/pkg/client/listers/certcontroller/v1alpha1"
+	v1alpha1 "github.com/xmudrii/certs-controller/pkg/client/listers/certs/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	watch "k8s.io/apimachinery/pkg/watch"
@@ -70,7 +70,7 @@ func NewFilteredCABundleInformer(client versioned.Interface, namespace string, r
 				return client.CertcontrollerV1alpha1().CABundles(namespace).Watch(options)
 			},
 		},
-		&certcontroller_v1alpha1.CABundle{},
+		&certs_v1alpha1.CABundle{},
 		resyncPeriod,
 		indexers,
 	)
@@ -81,7 +81,7 @@ func (f *cABundleInformer) defaultInformer(client versioned.Interface, resyncPer
 }
 
 func (f *cABundleInformer) Informer() cache.SharedIndexInformer {
-	return f.factory.InformerFor(&certcontroller_v1alpha1.CABundle{}, f.defaultInformer)
+	return f.factory.InformerFor(&certs_v1alpha1.CABundle{}, f.defaultInformer)
 }
 
 func (f *cABundleInformer) Lister() v1alpha1.CABundleLister {

@@ -19,7 +19,7 @@ limitations under the License.
 package certcontroller
 
 import (
-	v1alpha1 "github.com/xmudrii/certs-controller/pkg/client/informers/externalversions/certcontroller/v1alpha1"
+	v1alpha1 "github.com/xmudrii/certs-controller/pkg/client/informers/externalversions/certs/v1alpha1"
 	internalinterfaces "github.com/xmudrii/certs-controller/pkg/client/informers/externalversions/internalinterfaces"
 )
 

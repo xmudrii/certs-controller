@@ -21,7 +21,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	certcontroller "github.com/xmudrii/certs-controller/pkg/apis/certcontroller"
+	certcontroller "github.com/xmudrii/certs-controller/pkg/apis/certs"
 )
 
 // SchemeGroupVersion is group version used to register these objects

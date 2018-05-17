@@ -19,7 +19,7 @@ limitations under the License.
 package v1alpha1
 
 import (
-	v1alpha1 "github.com/xmudrii/certs-controller/pkg/apis/certcontroller/v1alpha1"
+	v1alpha1 "github.com/xmudrii/certs-controller/pkg/apis/certs/v1alpha1"
 	"github.com/xmudrii/certs-controller/pkg/client/clientset/versioned/scheme"
 	serializer "k8s.io/apimachinery/pkg/runtime/serializer"
 	rest "k8s.io/client-go/rest"

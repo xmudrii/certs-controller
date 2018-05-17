@@ -35,11 +35,11 @@ import (
 	"k8s.io/client-go/tools/record"
 	"k8s.io/client-go/util/workqueue"
 
-	certv1alpha1 "github.com/xmudrii/certs-controller/pkg/apis/certcontroller/v1alpha1"
+	certv1alpha1 "github.com/xmudrii/certs-controller/pkg/apis/certs/v1alpha1"
 	clientset "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned"
 	certscheme "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned/scheme"
 	informers "github.com/xmudrii/certs-controller/pkg/client/informers/externalversions"
-	listers "github.com/xmudrii/certs-controller/pkg/client/listers/certcontroller/v1alpha1"
+	listers "github.com/xmudrii/certs-controller/pkg/client/listers/certs/v1alpha1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"bytes"
 	"github.com/cloudflare/cfssl/csr"
