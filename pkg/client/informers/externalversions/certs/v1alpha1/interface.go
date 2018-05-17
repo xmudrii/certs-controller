@@ -26,8 +26,8 @@ import (
 type Interface interface {
 	// CABundles returns a CABundleInformer.
 	CABundles() CABundleInformer
-	// SrvCerts returns a SrvCertInformer.
-	SrvCerts() SrvCertInformer
+	// Certificates returns a CertificateInformer.
+	Certificates() CertificateInformer
 }
 
 type version struct {
@@ -46,7 +46,7 @@ func (v *version) CABundles() CABundleInformer {
 	return &cABundleInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }
 
-// SrvCerts returns a SrvCertInformer.
-func (v *version) SrvCerts() SrvCertInformer {
-	return &srvCertInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+// Certificates returns a CertificateInformer.
+func (v *version) Certificates() CertificateInformer {
+	return &certificateInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }

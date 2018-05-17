@@ -36,23 +36,23 @@ type FakeSrvCerts struct {
 
 var srvcertsResource = schema.GroupVersionResource{Group: "certcontroller.k8s.io", Version: "v1alpha1", Resource: "srvcerts"}
 
-var srvcertsKind = schema.GroupVersionKind{Group: "certcontroller.k8s.io", Version: "v1alpha1", Kind: "SrvCert"}
+var srvcertsKind = schema.GroupVersionKind{Group: "certcontroller.k8s.io", Version: "v1alpha1", Kind: "Certificate"}
 
 // Get takes name of the srvCert, and returns the corresponding srvCert object, and an error if there is any.
-func (c *FakeSrvCerts) Get(name string, options v1.GetOptions) (result *v1alpha1.SrvCert, err error) {
+func (c *FakeSrvCerts) Get(name string, options v1.GetOptions) (result *v1alpha1.Certificate, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewGetAction(srvcertsResource, c.ns, name), &v1alpha1.SrvCert{})
+		Invokes(testing.NewGetAction(srvcertsResource, c.ns, name), &v1alpha1.Certificate{})
 
 	if obj == nil {
 		return nil, err
 	}
-	return obj.(*v1alpha1.SrvCert), err
+	return obj.(*v1alpha1.Certificate), err
 }
 
 // List takes label and field selectors, and returns the list of SrvCerts that match those selectors.
-func (c *FakeSrvCerts) List(opts v1.ListOptions) (result *v1alpha1.SrvCertList, err error) {
+func (c *FakeSrvCerts) List(opts v1.ListOptions) (result *v1alpha1.CertificateList, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewListAction(srvcertsResource, srvcertsKind, c.ns, opts), &v1alpha1.SrvCertList{})
+		Invokes(testing.NewListAction(srvcertsResource, srvcertsKind, c.ns, opts), &v1alpha1.CertificateList{})
 
 	if obj == nil {
 		return nil, err
@@ -62,8 +62,8 @@ func (c *FakeSrvCerts) List(opts v1.ListOptions) (result *v1alpha1.SrvCertList, 
 	if label == nil {
 		label = labels.Everything()
 	}
-	list := &v1alpha1.SrvCertList{ListMeta: obj.(*v1alpha1.SrvCertList).ListMeta}
-	for _, item := range obj.(*v1alpha1.SrvCertList).Items {
+	list := &v1alpha1.CertificateList{ListMeta: obj.(*v1alpha1.CertificateList).ListMeta}
+	for _, item := range obj.(*v1alpha1.CertificateList).Items {
 		if label.Matches(labels.Set(item.Labels)) {
 			list.Items = append(list.Items, item)
 		}
@@ -79,43 +79,43 @@ func (c *FakeSrvCerts) Watch(opts v1.ListOptions) (watch.Interface, error) {
 }
 
 // Create takes the representation of a srvCert and creates it.  Returns the server's representation of the srvCert, and an error, if there is any.
-func (c *FakeSrvCerts) Create(srvCert *v1alpha1.SrvCert) (result *v1alpha1.SrvCert, err error) {
+func (c *FakeSrvCerts) Create(srvCert *v1alpha1.Certificate) (result *v1alpha1.Certificate, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewCreateAction(srvcertsResource, c.ns, srvCert), &v1alpha1.SrvCert{})
+		Invokes(testing.NewCreateAction(srvcertsResource, c.ns, srvCert), &v1alpha1.Certificate{})
 
 	if obj == nil {
 		return nil, err
 	}
-	return obj.(*v1alpha1.SrvCert), err
+	return obj.(*v1alpha1.Certificate), err
 }
 
 // Update takes the representation of a srvCert and updates it. Returns the server's representation of the srvCert, and an error, if there is any.
-func (c *FakeSrvCerts) Update(srvCert *v1alpha1.SrvCert) (result *v1alpha1.SrvCert, err error) {
+func (c *FakeSrvCerts) Update(srvCert *v1alpha1.Certificate) (result *v1alpha1.Certificate, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateAction(srvcertsResource, c.ns, srvCert), &v1alpha1.SrvCert{})
+		Invokes(testing.NewUpdateAction(srvcertsResource, c.ns, srvCert), &v1alpha1.Certificate{})
 
 	if obj == nil {
 		return nil, err
 	}
-	return obj.(*v1alpha1.SrvCert), err
+	return obj.(*v1alpha1.Certificate), err
 }
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeSrvCerts) UpdateStatus(srvCert *v1alpha1.SrvCert) (*v1alpha1.SrvCert, error) {
+func (c *FakeSrvCerts) UpdateStatus(srvCert *v1alpha1.Certificate) (*v1alpha1.Certificate, error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceAction(srvcertsResource, "status", c.ns, srvCert), &v1alpha1.SrvCert{})
+		Invokes(testing.NewUpdateSubresourceAction(srvcertsResource, "status", c.ns, srvCert), &v1alpha1.Certificate{})
 
 	if obj == nil {
 		return nil, err
 	}
-	return obj.(*v1alpha1.SrvCert), err
+	return obj.(*v1alpha1.Certificate), err
 }
 
 // Delete takes name of the srvCert and deletes it. Returns an error if one occurs.
 func (c *FakeSrvCerts) Delete(name string, options *v1.DeleteOptions) error {
 	_, err := c.Fake.
-		Invokes(testing.NewDeleteAction(srvcertsResource, c.ns, name), &v1alpha1.SrvCert{})
+		Invokes(testing.NewDeleteAction(srvcertsResource, c.ns, name), &v1alpha1.Certificate{})
 
 	return err
 }
@@ -124,17 +124,17 @@ func (c *FakeSrvCerts) Delete(name string, options *v1.DeleteOptions) error {
 func (c *FakeSrvCerts) DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error {
 	action := testing.NewDeleteCollectionAction(srvcertsResource, c.ns, listOptions)
 
-	_, err := c.Fake.Invokes(action, &v1alpha1.SrvCertList{})
+	_, err := c.Fake.Invokes(action, &v1alpha1.CertificateList{})
 	return err
 }
 
 // Patch applies the patch and returns the patched srvCert.
-func (c *FakeSrvCerts) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha1.SrvCert, err error) {
+func (c *FakeSrvCerts) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha1.Certificate, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceAction(srvcertsResource, c.ns, name, data, subresources...), &v1alpha1.SrvCert{})
+		Invokes(testing.NewPatchSubresourceAction(srvcertsResource, c.ns, name, data, subresources...), &v1alpha1.Certificate{})
 
 	if obj == nil {
 		return nil, err
 	}
-	return obj.(*v1alpha1.SrvCert), err
+	return obj.(*v1alpha1.Certificate), err
 }

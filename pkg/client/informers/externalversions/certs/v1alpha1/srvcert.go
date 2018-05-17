@@ -44,14 +44,14 @@ type srvCertInformer struct {
 	namespace        string
 }
 
-// NewSrvCertInformer constructs a new informer for SrvCert type.
+// NewSrvCertInformer constructs a new informer for Certificate type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
 func NewSrvCertInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
 	return NewFilteredSrvCertInformer(client, namespace, resyncPeriod, indexers, nil)
 }
 
-// NewFilteredSrvCertInformer constructs a new informer for SrvCert type.
+// NewFilteredSrvCertInformer constructs a new informer for Certificate type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
 func NewFilteredSrvCertInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
@@ -70,7 +70,7 @@ func NewFilteredSrvCertInformer(client versioned.Interface, namespace string, re
 				return client.CertcontrollerV1alpha1().SrvCerts(namespace).Watch(options)
 			},
 		},
-		&certs_v1alpha1.SrvCert{},
+		&certs_v1alpha1.Certificate{},
 		resyncPeriod,
 		indexers,
 	)
@@ -81,7 +81,7 @@ func (f *srvCertInformer) defaultInformer(client versioned.Interface, resyncPeri
 }
 
 func (f *srvCertInformer) Informer() cache.SharedIndexInformer {
-	return f.factory.InformerFor(&certs_v1alpha1.SrvCert{}, f.defaultInformer)
+	return f.factory.InformerFor(&certs_v1alpha1.Certificate{}, f.defaultInformer)
 }
 
 func (f *srvCertInformer) Lister() v1alpha1.SrvCertLister {

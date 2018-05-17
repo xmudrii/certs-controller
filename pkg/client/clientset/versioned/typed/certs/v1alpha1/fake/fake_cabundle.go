@@ -30,13 +30,13 @@ import (
 
 // FakeCABundles implements CABundleInterface
 type FakeCABundles struct {
-	Fake *FakeCertcontrollerV1alpha1
+	Fake *FakeCertsV1alpha1
 	ns   string
 }
 
-var cabundlesResource = schema.GroupVersionResource{Group: "certcontroller.k8s.io", Version: "v1alpha1", Resource: "cabundles"}
+var cabundlesResource = schema.GroupVersionResource{Group: "certs.k8s.io", Version: "v1alpha1", Resource: "cabundles"}
 
-var cabundlesKind = schema.GroupVersionKind{Group: "certcontroller.k8s.io", Version: "v1alpha1", Kind: "CABundle"}
+var cabundlesKind = schema.GroupVersionKind{Group: "certs.k8s.io", Version: "v1alpha1", Kind: "CABundle"}
 
 // Get takes name of the cABundle, and returns the corresponding cABundle object, and an error if there is any.
 func (c *FakeCABundles) Get(name string, options v1.GetOptions) (result *v1alpha1.CABundle, err error) {

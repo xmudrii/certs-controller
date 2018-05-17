@@ -26,10 +26,10 @@ type CABundleListerExpansion interface{}
 // CABundleNamespaceLister.
 type CABundleNamespaceListerExpansion interface{}
 
-// SrvCertListerExpansion allows custom methods to be added to
-// SrvCertLister.
-type SrvCertListerExpansion interface{}
+// CertificateListerExpansion allows custom methods to be added to
+// CertificateLister.
+type CertificateListerExpansion interface{}
 
-// SrvCertNamespaceListerExpansion allows custom methods to be added to
-// SrvCertNamespaceLister.
-type SrvCertNamespaceListerExpansion interface{}
+// CertificateNamespaceListerExpansion allows custom methods to be added to
+// CertificateNamespaceLister.
+type CertificateNamespaceListerExpansion interface{}

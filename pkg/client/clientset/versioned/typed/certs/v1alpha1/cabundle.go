@@ -54,7 +54,7 @@ type cABundles struct {
 }
 
 // newCABundles returns a CABundles
-func newCABundles(c *CertcontrollerV1alpha1Client, namespace string) *cABundles {
+func newCABundles(c *CertsV1alpha1Client, namespace string) *cABundles {
 	return &cABundles{
 		client: c.RESTClient(),
 		ns:     namespace,

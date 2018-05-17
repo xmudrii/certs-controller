@@ -47,8 +47,8 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 	scheme.AddKnownTypes(SchemeGroupVersion,
 		&CABundle{},
 		&CABundleList{},
-		&SrvCert{},
-		&SrvCertList{},
+		&Certificate{},
+		&CertificateList{},
 	)
 	metav1.AddToGroupVersion(scheme, SchemeGroupVersion)
 	return nil

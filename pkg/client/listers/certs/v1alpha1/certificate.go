@@ -25,56 +25,56 @@ import (
 	"k8s.io/client-go/tools/cache"
 )
 
-// SrvCertLister helps list SrvCerts.
-type SrvCertLister interface {
-	// List lists all SrvCerts in the indexer.
+// CertificateLister helps list Certificates.
+type CertificateLister interface {
+	// List lists all Certificates in the indexer.
 	List(selector labels.Selector) (ret []*v1alpha1.Certificate, err error)
-	// SrvCerts returns an object that can list and get SrvCerts.
-	SrvCerts(namespace string) SrvCertNamespaceLister
-	SrvCertListerExpansion
+	// Certificates returns an object that can list and get Certificates.
+	Certificates(namespace string) CertificateNamespaceLister
+	CertificateListerExpansion
 }
 
-// srvCertLister implements the SrvCertLister interface.
-type srvCertLister struct {
+// certificateLister implements the CertificateLister interface.
+type certificateLister struct {
 	indexer cache.Indexer
 }
 
-// NewSrvCertLister returns a new SrvCertLister.
-func NewSrvCertLister(indexer cache.Indexer) SrvCertLister {
-	return &srvCertLister{indexer: indexer}
+// NewCertificateLister returns a new CertificateLister.
+func NewCertificateLister(indexer cache.Indexer) CertificateLister {
+	return &certificateLister{indexer: indexer}
 }
 
-// List lists all SrvCerts in the indexer.
-func (s *srvCertLister) List(selector labels.Selector) (ret []*v1alpha1.Certificate, err error) {
+// List lists all Certificates in the indexer.
+func (s *certificateLister) List(selector labels.Selector) (ret []*v1alpha1.Certificate, err error) {
 	err = cache.ListAll(s.indexer, selector, func(m interface{}) {
 		ret = append(ret, m.(*v1alpha1.Certificate))
 	})
 	return ret, err
 }
 
-// SrvCerts returns an object that can list and get SrvCerts.
-func (s *srvCertLister) SrvCerts(namespace string) SrvCertNamespaceLister {
-	return srvCertNamespaceLister{indexer: s.indexer, namespace: namespace}
+// Certificates returns an object that can list and get Certificates.
+func (s *certificateLister) Certificates(namespace string) CertificateNamespaceLister {
+	return certificateNamespaceLister{indexer: s.indexer, namespace: namespace}
 }
 
-// SrvCertNamespaceLister helps list and get SrvCerts.
-type SrvCertNamespaceLister interface {
-	// List lists all SrvCerts in the indexer for a given namespace.
+// CertificateNamespaceLister helps list and get Certificates.
+type CertificateNamespaceLister interface {
+	// List lists all Certificates in the indexer for a given namespace.
 	List(selector labels.Selector) (ret []*v1alpha1.Certificate, err error)
 	// Get retrieves the Certificate from the indexer for a given namespace and name.
 	Get(name string) (*v1alpha1.Certificate, error)
-	SrvCertNamespaceListerExpansion
+	CertificateNamespaceListerExpansion
 }
 
-// srvCertNamespaceLister implements the SrvCertNamespaceLister
+// certificateNamespaceLister implements the CertificateNamespaceLister
 // interface.
-type srvCertNamespaceLister struct {
+type certificateNamespaceLister struct {
 	indexer   cache.Indexer
 	namespace string
 }
 
-// List lists all SrvCerts in the indexer for a given namespace.
-func (s srvCertNamespaceLister) List(selector labels.Selector) (ret []*v1alpha1.Certificate, err error) {
+// List lists all Certificates in the indexer for a given namespace.
+func (s certificateNamespaceLister) List(selector labels.Selector) (ret []*v1alpha1.Certificate, err error) {
 	err = cache.ListAllByNamespace(s.indexer, s.namespace, selector, func(m interface{}) {
 		ret = append(ret, m.(*v1alpha1.Certificate))
 	})
@@ -82,13 +82,13 @@ func (s srvCertNamespaceLister) List(selector labels.Selector) (ret []*v1alpha1.
 }
 
 // Get retrieves the Certificate from the indexer for a given namespace and name.
-func (s srvCertNamespaceLister) Get(name string) (*v1alpha1.Certificate, error) {
+func (s certificateNamespaceLister) Get(name string) (*v1alpha1.Certificate, error) {
 	obj, exists, err := s.indexer.GetByKey(s.namespace + "/" + name)
 	if err != nil {
 		return nil, err
 	}
 	if !exists {
-		return nil, errors.NewNotFound(v1alpha1.Resource("srvcert"), name)
+		return nil, errors.NewNotFound(v1alpha1.Resource("certificate"), name)
 	}
 	return obj.(*v1alpha1.Certificate), nil
 }

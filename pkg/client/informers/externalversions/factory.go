@@ -172,9 +172,9 @@ type SharedInformerFactory interface {
 	ForResource(resource schema.GroupVersionResource) (GenericInformer, error)
 	WaitForCacheSync(stopCh <-chan struct{}) map[reflect.Type]bool
 
-	Certcontroller() certs.Interface
+	Certs() certs.Interface
 }
 
-func (f *sharedInformerFactory) Certcontroller() certs.Interface {
+func (f *sharedInformerFactory) Certs() certs.Interface {
 	return certs.New(f, f.namespace, f.tweakListOptions)
 }

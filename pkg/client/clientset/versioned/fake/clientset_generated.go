@@ -20,8 +20,8 @@ package fake
 
 import (
 	clientset "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned"
-	certcontrollerv1alpha1 "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned/typed/certs/v1alpha1"
-	fakecertcontrollerv1alpha1 "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned/typed/certs/v1alpha1/fake"
+	certsv1alpha1 "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned/typed/certs/v1alpha1"
+	fakecertsv1alpha1 "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned/typed/certs/v1alpha1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"
@@ -71,12 +71,12 @@ func (c *Clientset) Discovery() discovery.DiscoveryInterface {
 
 var _ clientset.Interface = &Clientset{}
 
-// CertcontrollerV1alpha1 retrieves the CertcontrollerV1alpha1Client
-func (c *Clientset) CertcontrollerV1alpha1() certcontrollerv1alpha1.CertcontrollerV1alpha1Interface {
-	return &fakecertcontrollerv1alpha1.FakeCertcontrollerV1alpha1{Fake: &c.Fake}
+// CertsV1alpha1 retrieves the CertsV1alpha1Client
+func (c *Clientset) CertsV1alpha1() certsv1alpha1.CertsV1alpha1Interface {
+	return &fakecertsv1alpha1.FakeCertsV1alpha1{Fake: &c.Fake}
 }
 
-// Certcontroller retrieves the CertcontrollerV1alpha1Client
-func (c *Clientset) Certcontroller() certcontrollerv1alpha1.CertcontrollerV1alpha1Interface {
-	return &fakecertcontrollerv1alpha1.FakeCertcontrollerV1alpha1{Fake: &c.Fake}
+// Certs retrieves the CertsV1alpha1Client
+func (c *Clientset) Certs() certsv1alpha1.CertsV1alpha1Interface {
+	return &fakecertsv1alpha1.FakeCertsV1alpha1{Fake: &c.Fake}
 }

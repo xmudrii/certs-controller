@@ -54,30 +54,30 @@ type CABundleList struct {
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// SrvCert is a specification for a SrvCert resource
-type SrvCert struct {
+// Certificate is a specification for a Certificate resource
+type Certificate struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   SrvCertSpec   `json:"spec"`
-	Status SrvCertStatus `json:"status"`
+	Spec   CertificateSpec   `json:"spec"`
+	Status CertificateStatus `json:"status"`
 }
 
-// SrvCertSpec is the spec for a SrvCert resource
-type SrvCertSpec struct {
+// CertificateSpec is the spec for a Certificate resource
+type CertificateSpec struct {
 	CSR string `json:"csr"`
 }
 
-// SrvCertStatus is the status for a SrvCert resource
-type SrvCertStatus struct {
+// CertificateStatus is the status for a Certificate resource
+type CertificateStatus struct {
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// SrvCertList is a list of SrvCert resources
-type SrvCertList struct {
+// CertificateList is a list of Certificate resources
+type CertificateList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata"`
 
-	Items []SrvCertSpec `json:"items"`
+	Items []CertificateSpec `json:"items"`
 }

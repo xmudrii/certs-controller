@@ -20,4 +20,4 @@ package v1alpha1
 
 type CABundleExpansion interface{}
 
-type SrvCertExpansion interface{}
+type CertificateExpansion interface{}

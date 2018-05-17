@@ -24,21 +24,21 @@ import (
 	testing "k8s.io/client-go/testing"
 )
 
-type FakeCertcontrollerV1alpha1 struct {
+type FakeCertsV1alpha1 struct {
 	*testing.Fake
 }
 
-func (c *FakeCertcontrollerV1alpha1) CABundles(namespace string) v1alpha1.CABundleInterface {
+func (c *FakeCertsV1alpha1) CABundles(namespace string) v1alpha1.CABundleInterface {
 	return &FakeCABundles{c, namespace}
 }
 
-func (c *FakeCertcontrollerV1alpha1) SrvCerts(namespace string) v1alpha1.SrvCertInterface {
-	return &FakeSrvCerts{c, namespace}
+func (c *FakeCertsV1alpha1) Certificates(namespace string) v1alpha1.CertificateInterface {
+	return &FakeCertificates{c, namespace}
 }
 
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
-func (c *FakeCertcontrollerV1alpha1) RESTClient() rest.Interface {
+func (c *FakeCertsV1alpha1) RESTClient() rest.Interface {
 	var ret *rest.RESTClient
 	return ret
 }

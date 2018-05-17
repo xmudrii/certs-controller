@@ -19,7 +19,7 @@ limitations under the License.
 package versioned
 
 import (
-	certcontrollerv1alpha1 "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned/typed/certs/v1alpha1"
+	certsv1alpha1 "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned/typed/certs/v1alpha1"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
 	flowcontrol "k8s.io/client-go/util/flowcontrol"
@@ -27,27 +27,27 @@ import (
 
 type Interface interface {
 	Discovery() discovery.DiscoveryInterface
-	CertcontrollerV1alpha1() certcontrollerv1alpha1.CertcontrollerV1alpha1Interface
+	CertsV1alpha1() certsv1alpha1.CertsV1alpha1Interface
 	// Deprecated: please explicitly pick a version if possible.
-	Certcontroller() certcontrollerv1alpha1.CertcontrollerV1alpha1Interface
+	Certs() certsv1alpha1.CertsV1alpha1Interface
 }
 
 // Clientset contains the clients for groups. Each group has exactly one
 // version included in a Clientset.
 type Clientset struct {
 	*discovery.DiscoveryClient
-	certcontrollerV1alpha1 *certcontrollerv1alpha1.CertcontrollerV1alpha1Client
+	certsV1alpha1 *certsv1alpha1.CertsV1alpha1Client
 }
 
-// CertcontrollerV1alpha1 retrieves the CertcontrollerV1alpha1Client
-func (c *Clientset) CertcontrollerV1alpha1() certcontrollerv1alpha1.CertcontrollerV1alpha1Interface {
-	return c.certcontrollerV1alpha1
+// CertsV1alpha1 retrieves the CertsV1alpha1Client
+func (c *Clientset) CertsV1alpha1() certsv1alpha1.CertsV1alpha1Interface {
+	return c.certsV1alpha1
 }
 
-// Deprecated: Certcontroller retrieves the default version of CertcontrollerClient.
+// Deprecated: Certs retrieves the default version of CertsClient.
 // Please explicitly pick a version.
-func (c *Clientset) Certcontroller() certcontrollerv1alpha1.CertcontrollerV1alpha1Interface {
-	return c.certcontrollerV1alpha1
+func (c *Clientset) Certs() certsv1alpha1.CertsV1alpha1Interface {
+	return c.certsV1alpha1
 }
 
 // Discovery retrieves the DiscoveryClient
@@ -66,7 +66,7 @@ func NewForConfig(c *rest.Config) (*Clientset, error) {
 	}
 	var cs Clientset
 	var err error
-	cs.certcontrollerV1alpha1, err = certcontrollerv1alpha1.NewForConfig(&configShallowCopy)
+	cs.certsV1alpha1, err = certsv1alpha1.NewForConfig(&configShallowCopy)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func NewForConfig(c *rest.Config) (*Clientset, error) {
 // panics if there is an error in the config.
 func NewForConfigOrDie(c *rest.Config) *Clientset {
 	var cs Clientset
-	cs.certcontrollerV1alpha1 = certcontrollerv1alpha1.NewForConfigOrDie(c)
+	cs.certsV1alpha1 = certsv1alpha1.NewForConfigOrDie(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClientForConfigOrDie(c)
 	return &cs
@@ -91,7 +91,7 @@ func NewForConfigOrDie(c *rest.Config) *Clientset {
 // New creates a new Clientset for the given RESTClient.
 func New(c rest.Interface) *Clientset {
 	var cs Clientset
-	cs.certcontrollerV1alpha1 = certcontrollerv1alpha1.New(c)
+	cs.certsV1alpha1 = certsv1alpha1.New(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClient(c)
 	return &cs

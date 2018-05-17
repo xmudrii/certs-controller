@@ -31,59 +31,59 @@ import (
 	cache "k8s.io/client-go/tools/cache"
 )
 
-// CABundleInformer provides access to a shared informer and lister for
-// CABundles.
-type CABundleInformer interface {
+// CertificateInformer provides access to a shared informer and lister for
+// Certificates.
+type CertificateInformer interface {
 	Informer() cache.SharedIndexInformer
-	Lister() v1alpha1.CABundleLister
+	Lister() v1alpha1.CertificateLister
 }
 
-type cABundleInformer struct {
+type certificateInformer struct {
 	factory          internalinterfaces.SharedInformerFactory
 	tweakListOptions internalinterfaces.TweakListOptionsFunc
 	namespace        string
 }
 
-// NewCABundleInformer constructs a new informer for CABundle type.
+// NewCertificateInformer constructs a new informer for Certificate type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewCABundleInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
-	return NewFilteredCABundleInformer(client, namespace, resyncPeriod, indexers, nil)
+func NewCertificateInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
+	return NewFilteredCertificateInformer(client, namespace, resyncPeriod, indexers, nil)
 }
 
-// NewFilteredCABundleInformer constructs a new informer for CABundle type.
+// NewFilteredCertificateInformer constructs a new informer for Certificate type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewFilteredCABundleInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
+func NewFilteredCertificateInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{
 			ListFunc: func(options v1.ListOptions) (runtime.Object, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.CertsV1alpha1().CABundles(namespace).List(options)
+				return client.CertsV1alpha1().Certificates(namespace).List(options)
 			},
 			WatchFunc: func(options v1.ListOptions) (watch.Interface, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.CertsV1alpha1().CABundles(namespace).Watch(options)
+				return client.CertsV1alpha1().Certificates(namespace).Watch(options)
 			},
 		},
-		&certs_v1alpha1.CABundle{},
+		&certs_v1alpha1.Certificate{},
 		resyncPeriod,
 		indexers,
 	)
 }
 
-func (f *cABundleInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
-	return NewFilteredCABundleInformer(client, f.namespace, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
+func (f *certificateInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
+	return NewFilteredCertificateInformer(client, f.namespace, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
 }
 
-func (f *cABundleInformer) Informer() cache.SharedIndexInformer {
-	return f.factory.InformerFor(&certs_v1alpha1.CABundle{}, f.defaultInformer)
+func (f *certificateInformer) Informer() cache.SharedIndexInformer {
+	return f.factory.InformerFor(&certs_v1alpha1.Certificate{}, f.defaultInformer)
 }
 
-func (f *cABundleInformer) Lister() v1alpha1.CABundleLister {
-	return v1alpha1.NewCABundleLister(f.Informer().GetIndexer())
+func (f *certificateInformer) Lister() v1alpha1.CertificateLister {
+	return v1alpha1.NewCertificateLister(f.Informer().GetIndexer())
 }
