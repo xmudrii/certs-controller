@@ -31,6 +31,7 @@ import (
 	informers "github.com/xmudrii/certs-controller/pkg/client/informers/externalversions"
 	"github.com/xmudrii/certs-controller/pkg/controller/cabundle"
 	"github.com/xmudrii/certs-controller/pkg/signals"
+	"github.com/xmudrii/certs-controller/pkg/controller/certs"
 )
 
 var (
@@ -63,9 +64,11 @@ func main() {
 	exampleInformerFactory := informers.NewSharedInformerFactory(exampleClient, time.Second*30)
 
 	bundleController := cabundle.NewBundleController(kubeClient, exampleClient, kubeInformerFactory, exampleInformerFactory)
+	certsController := certs.NewCertsController(kubeClient, exampleClient, kubeInformerFactory, exampleInformerFactory)
 
 	go kubeInformerFactory.Start(stopCh)
 	go exampleInformerFactory.Start(stopCh)
+	go certsController.Run(2, stopCh)
 
 	if err = bundleController.Run(2, stopCh); err != nil {
 		glog.Fatalf("Error running controller: %s", err.Error())

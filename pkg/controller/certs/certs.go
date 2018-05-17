@@ -27,6 +27,7 @@ func newCertificate(profile, caFile, caKeyFile string, csrBytes []byte) ([]byte,
 		return nil, nil, nil, err
 	}
 
+	// TODO: refactor to use bytes instead of files.
 	s, err := local.NewSignerFromFile(caFile, caKeyFile, nil)
 	if err != nil {
 		return nil, nil, nil, err

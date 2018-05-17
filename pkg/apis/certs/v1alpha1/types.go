@@ -65,7 +65,17 @@ type Certificate struct {
 
 // CertificateSpec is the spec for a Certificate resource
 type CertificateSpec struct {
+	// CSR is Certificate request.
 	CSR string `json:"csr"`
+
+	// CA is a certificate.
+	CA string `json:"ca"`
+
+	// CAKey is a certificate's key.
+	CAKey string `json:"cakey"`
+
+	// Profile is annotating what certificate we're generating (server or client).
+	Profile string `json:"profile"`
 }
 
 // CertificateStatus is the status for a Certificate resource

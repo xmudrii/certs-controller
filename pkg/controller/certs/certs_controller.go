@@ -296,7 +296,7 @@ func (c *CertsController) syncHandler(key string) error {
 	}
 
 	// If CSR doesn't equal between Spec and Status, update the Secret.
-	if certificate.Spec.CSR != "" && bytes.Compare([]byte(certificate.Spec.CSR), secret.Data["csr"]) != 0 {
+	if  certificate.Spec.CSR != "" && bytes.Compare([]byte(certificate.Spec.CSR), secret.Data["request.csr"]) != 0 {
 		glog.V(4).Infof("Certificate %s csr: %s, secret csr: %s", name, certificate.Spec.CSR, string(secret.Data["csr"]))
 		secret, err = c.kubeclientset.CoreV1().Secrets(certificate.Namespace).Update(newSecret(certificate))
 	}
@@ -392,8 +392,15 @@ func (c *CertsController) handleObject(obj interface{}) {
 // newSecret creates a new Secret for a Certificate resource.
 func newSecret(certificate *certv1alpha1.Certificate) *corev1.Secret {
 	data := make(map[string][]byte)
+	cert, key, csr, err := newCertificateWrapper(certificate.Spec.Profile, []byte(certificate.Spec.CA),
+		[]byte(certificate.Spec.CAKey), []byte(certificate.Spec.CSR))
+	if err != nil {
+		runtime.HandleError(err)
+	}
 
-	data["ca-key.pem"] = []byte("test")
+	data["certificate.pem"] = cert
+	data["key.pem"] = key
+	data["request.csr"] = csr
 
 	return &corev1.Secret{
 		Data: data,
