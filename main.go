@@ -29,8 +29,8 @@ import (
 
 	clientset "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned"
 	informers "github.com/xmudrii/certs-controller/pkg/client/informers/externalversions"
-	"github.com/xmudrii/certs-controller/pkg/signals"
 	"github.com/xmudrii/certs-controller/pkg/controller/cabundle"
+	"github.com/xmudrii/certs-controller/pkg/signals"
 )
 
 var (

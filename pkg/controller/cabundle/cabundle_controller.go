@@ -35,16 +35,16 @@ import (
 	"k8s.io/client-go/tools/record"
 	"k8s.io/client-go/util/workqueue"
 
+	"bytes"
+	"encoding/json"
+	"github.com/cloudflare/cfssl/csr"
+	"github.com/cloudflare/cfssl/initca"
 	certv1alpha1 "github.com/xmudrii/certs-controller/pkg/apis/certs/v1alpha1"
 	clientset "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned"
 	certscheme "github.com/xmudrii/certs-controller/pkg/client/clientset/versioned/scheme"
 	informers "github.com/xmudrii/certs-controller/pkg/client/informers/externalversions"
 	listers "github.com/xmudrii/certs-controller/pkg/client/listers/certs/v1alpha1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	"bytes"
-	"github.com/cloudflare/cfssl/csr"
-	"github.com/cloudflare/cfssl/initca"
-	"encoding/json"
 )
 
 const controllerAgentName = "cabundle-controller"
@@ -71,10 +71,10 @@ type BundleController struct {
 	// certclientset is a clientset for our own API group
 	certclientset clientset.Interface
 
-	secretsLister corelisters.SecretLister
-	secretsSynced cache.InformerSynced
-	caBundleLister        listers.CABundleLister
-	caBundleSynced        cache.InformerSynced
+	secretsLister  corelisters.SecretLister
+	secretsSynced  cache.InformerSynced
+	caBundleLister listers.CABundleLister
+	caBundleSynced cache.InformerSynced
 
 	// workqueue is a rate limited work queue. This is used to queue work to be
 	// processed instead of performing it as soon as a change happens. This
@@ -110,14 +110,14 @@ func NewBundleController(
 	recorder := eventBroadcaster.NewRecorder(scheme.Scheme, corev1.EventSource{Component: controllerAgentName})
 
 	controller := &BundleController{
-		kubeclientset:     kubeclientset,
-		certclientset:     certclientset,
-		secretsLister: secretsInformer.Lister(),
-		secretsSynced: secretsInformer.Informer().HasSynced,
-		caBundleLister:        caBundleInformer.Lister(),
-		caBundleSynced:        caBundleInformer.Informer().HasSynced,
-		workqueue:         workqueue.NewNamedRateLimitingQueue(workqueue.DefaultControllerRateLimiter(), "CABundles"),
-		recorder:          recorder,
+		kubeclientset:  kubeclientset,
+		certclientset:  certclientset,
+		secretsLister:  secretsInformer.Lister(),
+		secretsSynced:  secretsInformer.Informer().HasSynced,
+		caBundleLister: caBundleInformer.Lister(),
+		caBundleSynced: caBundleInformer.Informer().HasSynced,
+		workqueue:      workqueue.NewNamedRateLimitingQueue(workqueue.DefaultControllerRateLimiter(), "CABundles"),
+		recorder:       recorder,
 	}
 
 	glog.Info("Setting up event handlers")
@@ -276,7 +276,6 @@ func (c *BundleController) syncHandler(key string) error {
 		return nil
 	}
 
-
 	// Get the secret with the name specified in CABundle.spec
 	secret, err := c.secretsLister.Secrets(caBundle.Namespace).Get(secretName)
 	// If the resource doesn't exist, we'll create it
@@ -408,7 +407,7 @@ func newSecret(caBundle *certv1alpha1.CABundle) *corev1.Secret {
 	return &corev1.Secret{
 		Data: data,
 		ObjectMeta: metav1.ObjectMeta{
-			Name: caBundle.ObjectMeta.Name,
+			Name:      caBundle.ObjectMeta.Name,
 			Namespace: caBundle.Namespace,
 			OwnerReferences: []metav1.OwnerReference{
 				*metav1.NewControllerRef(caBundle, schema.GroupVersionKind{
